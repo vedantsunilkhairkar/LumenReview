@@ -100,8 +100,8 @@ The LangGraph state machine features a conditional interrupt at `human_review`. 
 
 ```bash
 # Clone the repository
-git clone https://github.com/example/lumenreview.git
-cd lumenreview
+git clone https://github.com/vedantsunilkhairkar/LumenReview.git
+cd LumenReview
 
 # Copy environment template
 cp .env.example .env
