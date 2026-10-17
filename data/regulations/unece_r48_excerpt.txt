@@ -1,0 +1,59 @@
+[DOCUMENT: UNECE Regulation No. 48 - Installation of Lighting Devices]
+
+[CLAUSE: 5.7 - Independent and Grouped Lamps]
+Clause 5.7: Lamps may be single lamps or grouped, combined or reciprocally incorporated lamps. Where the same lamp emits light of two or more different colours, or performs two or more different functions, the requirements of colour, luminous intensity and geometric visibility must be fulfilled for each function independently.
+
+[CLAUSE: 5.11 - Electrical Connections and Operating Telltales]
+Clause 5.11: The electrical connections must be such that the front and rear position lamps, the end-outline marker lamps, if they exist, the side-marker lamps, if they exist, and the rear registration plate lamp can only be switched ON and OFF simultaneously. This condition does not apply when front and rear position lamps are used as parking lamps.
+
+[CLAUSE: 5.15 - Prescribed Colours of Lamps]
+Clause 5.15: The colours of the light emitted by the lamps are the following:
+- Main-beam headlamp: White
+- Dipped-beam headlamp: White
+- Direction-indicator lamp: Amber
+- Stop lamp: Red
+- Rear registration plate lamp: White
+- Daytime running lamp: White
+- Reversing lamp: White
+- Front fog lamp: White or selective yellow
+
+[CLAUSE: 6.1.7 - Driving-Beam Electrical Connections and Activation]
+Clause 6.1.7.1: The driving-beam headlamps may be switched on either simultaneously or in pairs. For changing over from the dipped to the driving beam at least one pair of driving-beam headlamps must be switched on. For changing over from the driving to the dipped beam all driving-beam headlamps must be switched off simultaneously.
+Clause 6.1.7.2: The dipped-beams may remain switched on at the same time as the driving-beams.
+Clause 6.1.7.3: Where four concealable headlamps are fitted, their raised position must prevent the simultaneous operation of any additional headlamps fitted.
+
+[CLAUSE: 6.2.4 - Dipped-Beam Geometric Alignment and Height]
+Clause 6.2.4.1: In width: that edge of the apparent surface in the direction of the reference axis which is farthest from the vehicle's median longitudinal plane must be not more than 400 mm from the extreme outer edge of the vehicle. The inner edges of the apparent surfaces in the direction of the reference axes must be not less than 600 mm apart.
+Clause 6.2.4.2: In height: not less than 500 mm and not more than 1,200 mm above the ground. For Category N3G (off-road) vehicles, the maximum height may be increased to 1,500 mm.
+
+[CLAUSE: 6.2.6 - Dipped-Beam Initial Aim and Cut-off Inclination]
+Clause 6.2.6.1.1: The initial downward inclination of the cut-off of the dipped-beam to be set in the unladen vehicle state with one person in the driver's seat must be specified for each vehicle type by the manufacturer and marked in a clearly legible and indelible manner on each vehicle, close to either the headlamp or the manufacturer's plate, by the symbol shown in Annex 7.
+Clause 6.2.6.1.2: Depending on the mounting height in metres (h) of the lower edge of the apparent surface in the direction of the reference axis of the dipped-beam headlamp, measured on the unladen vehicle, the vertical inclination of the cut-off of the dipped-beam must remain between:
+- For h < 0.8 m: between -0.5% and -2.5% (initial aim between -1.0% and -1.5%).
+- For 0.8 m <= h <= 1.0 m: between -0.5% and -2.5% (initial aim between -1.0% and -1.5%).
+- For h > 1.0 m: between -1.0% and -3.0% (initial aim between -1.5% and -2.0%).
+
+[CLAUSE: 6.2.7 - Dipped-Beam Electrical Connections and Tell-tale]
+Clause 6.2.7.1: The control for changing over to the dipped-beam must switch off all driving-beam headlamps simultaneously.
+Clause 6.2.7.2: The dipped-beams may remain on when the driving-beams are switched on.
+Clause 6.2.7.3: Dipped-beam headlamps with a light source or LED module(s) producing the principal dipped-beam and having a total objective luminous flux which exceeds 2,000 lumens must only be installed in conjunction with the installation of headlamp cleaning devices according to Regulation No. 45. In addition, with respect to vertical inclination, the provisions of paragraph 6.2.6.2.2 shall not apply.
+Clause 6.2.8: Operating tell-tale is optional. However, a flashing or non-flashing tell-tale is mandatory if the dipped-beam is equipped with LED light sources having an automatic failure warning.
+
+[CLAUSE: 6.5.4 - Direction-Indicator Geometric Mounting]
+Clause 6.5.4.1: In width: The edge of the apparent surface farthest from the vehicle's median longitudinal plane must not be more than 400 mm from the extreme outer edge of the vehicle. The distance between the inner edges of the two apparent surfaces in the direction of the reference axes must not be less than 600 mm.
+Clause 6.5.4.2: In height: not less than 350 mm and not more than 1,500 mm above the ground.
+
+[CLAUSE: 6.5.7 - Direction-Indicator Electrical Connections and Flashing Frequency]
+Clause 6.5.7: Direction-indicator lamps must switch on independently of the other lamps. All direction-indicator lamps on one side of a vehicle must be switched on and off by means of one control and must flash synchronously in phase.
+Clause 6.5.8: Operating tell-tale mandatory for front and rear direction-indicator lamps. It may be visual or auditory or both. If visual, it must be a flashing light which, at least in the event of the malfunction of any of the direction-indicator lamps, either extinguishes, remains lit without flashing, or shows a marked change of frequency.
+Clause 6.5.9: The frequency of the light flash must be 90 +/- 30 periods per minute (1.5 +/- 0.5 Hz). The time interval between the first flash and activation of the operating control must not exceed one second.
+
+[CLAUSE: 6.7.4 - Stop Lamp Mounting and Visibility]
+Clause 6.7.4.1: In width: For Category M1 and N1 vehicles, no specific requirement; for all other categories of vehicles, the distance between the inner edges of the apparent surfaces must be not less than 600 mm.
+Clause 6.7.4.2: In height: not less than 350 mm and not more than 1,500 mm above the ground (2,100 mm if the shape of the bodywork makes it impossible to keep to 1,500 mm).
+Clause 6.7.7: Electrical connections: Must light up when the service brake is applied. The stop lamps need not function if the device which starts and/or stops the engine is in a position which makes it impossible for the engine to operate.
+
+[CLAUSE: 6.19.7 - Daytime Running Lamp Electrical Connections]
+Clause 6.19.7.1: The daytime running lamps must switch ON automatically when the device which starts and/or stops the engine is in a position which makes it possible for the engine to operate. However, the daytime running lamps may remain OFF whilst the automatic transmission control is in the park or neutral position, or the parking brake is applied.
+Clause 6.19.7.2: The daytime running lamps must switch OFF automatically when the front fog lamps or headlamps are switched ON, except when the latter are used to give intermittent luminous warnings at short intervals.
+Clause 6.19.7.3: Furthermore, the lamps referred to in paragraph 5.11 are not switched ON when the daytime running lamps are switched ON.

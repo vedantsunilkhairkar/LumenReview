@@ -1,0 +1,23 @@
+[DOCUMENT: UNECE Regulation No. 112 - Headlamps Emitting Asymmetrical Passing Beam]
+
+[CLAUSE: 5.3 - Light Sources and Luminous Flux Limits]
+Clause 5.3.1: The headlamp must be equipped with filament lamp(s) approved according to Regulation No. 37 and/or LED module(s).
+Clause 5.3.2: For LED modules, the total objective luminous flux of all LED modules producing the principal passing beam must be measured at 13.2 V. If the objective luminous flux exceeds 2,000 lumens, the applicant must demonstrate compliance with the mandatory headlamp cleaning device requirement specified in Regulation No. 48 paragraph 6.2.7.3.
+
+[CLAUSE: 6.2 - Passing Beam Photometric Requirements and Cut-off Line]
+Clause 6.2.1: The passing beam must produce a sufficiently sharp 'cut-off' permiting a satisfactory visual adjustment. The 'cut-off' must be a horizontal straight line on the side opposite to the direction of the traffic for which the headlamp is intended; on the other side, it must either be horizontal or rise towards the right (in right-hand traffic) or left (in left-hand traffic) at an angle of 15 degrees, or rise with an unbroken elbow.
+Clause 6.2.2: The headlamp must be visually aimed by means of the cut-off line. The horizontal part of the cut-off line must be aimed 25 cm below the horizontal line (h-h) on the screen at 25 metres (equivalent to 1% downward inclination).
+Clause 6.2.4: Only one principal passing-beam headlamp on each side of the vehicle is permitted to be operated at any one time, unless an additional passing beam is incorporated as part of an Adaptive Front-lighting System (AFS).
+
+[CLAUSE: 6.2.5 - Photometric Illumination Values on Measuring Screen]
+Clause 6.2.5.1: The illumination produced on the screen by the passing beam must meet the following photometric values at specified measuring points (measured at 25 m in lux):
+- Point B50L (glare point for opposing driver in right-hand traffic): maximum 0.4 lux (0.5 lux including tolerances).
+- Point 75R (kerb-side road surface illumination at 75 m): minimum 12.0 lux.
+- Point 50R (kerb-side road surface illumination at 50 m): minimum 12.0 lux.
+- Point 25L (road illumination at 25 m on opposing side): minimum 2.0 lux.
+- Zone III (glare zone above cut-off line): maximum 0.7 lux across the entire zone.
+Clause 6.2.5.2: Any headlamp designed to satisfy both right-hand and left-hand traffic must, in each of the two setting positions, satisfy the photometric requirements set forth above for the corresponding direction of traffic.
+
+[CLAUSE: 6.3 - Driving Beam Photometric Provisions]
+Clause 6.3.1: In the case of a headlamp designed to provide a driving beam and a passing beam, measurements of the illumination produced on the screen by the driving beam must be taken with the same headlamp alignment as for measurements of the passing beam.
+Clause 6.3.2: The point of maximum illumination (Imax) of the driving beam must be situated to the right of the vertical line v-v in the case of right-hand traffic, and must not be less than 32 lux at 25 metres distance. The maximum value of luminous intensity must not exceed 215,000 cd (equivalent to a maximum reference mark of 75).

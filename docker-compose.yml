@@ -1,0 +1,40 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - API_PORT=8000
+      - DATABASE_URL=sqlite+aiosqlite:///./data/lumenreview.db
+      - CHROMA_PERSIST_DIR=./data/chroma_db
+      - LLM_PROVIDER=mock
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE_URL=http://api:8000
+      - LLM_PROVIDER=mock
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
