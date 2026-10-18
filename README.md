@@ -1,6 +1,6 @@
-# 💡 LumenReview: Agentic Requirements Review for Automotive Lighting Homologation
+# 💡 LumenReview: Agentic Requirements Review & Homologation Intelligence
 
-[![CI Test & Lint](https://github.com/example/lumenreview/actions/workflows/ci.yml/badge.svg)](https://github.com/example/lumenreview)
+[![CI Test & Lint](https://github.com/vedantsunilkhairkar/LumenReview/actions/workflows/ci.yml/badge.svg)](https://github.com/vedantsunilkhairkar/LumenReview)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
 [![LangGraph](https://img.shields.io/badge/Orchestrator-LangGraph-FF6F00.svg)](https://langchain-ai.github.io/langgraph/)
@@ -8,7 +8,7 @@
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Automotive lighting homologation requirements review agent.** Evaluates specifications against authentic **UNECE R48** (Installation of Lighting Devices) and **UNECE R112** (Headlamps emitting asymmetrical passing beam) regulations with stateful **LangGraph** orchestration, **hybrid dense-sparse RAG**, and **100% programmatic citation verification**.
+> **Enterprise-grade automotive lighting homologation and value engineering intelligence agent for Tier-1 suppliers (e.g. FORVIA HELLA).** Evaluates OEM specifications against authentic **UNECE R48**, **UNECE R112**, and **US FMVSS 108** standards with stateful **LangGraph** orchestration, **hybrid dense-sparse RAG (BGE-Small + BM25)**, **multi-jurisdiction regulatory arbitrage**, **BOM cost-out detection (€1.20–€3.50/unit)**, **tooling risk mitigation (€180k–€350k)**, and **100% programmatic citation verification**.
 
 ---
 
@@ -234,10 +234,12 @@ lumenreview/
 │   ├── DECISIONS.md       # Architectural Decision Records (ADRs)
 │   ├── EVALUATION.md      # Benchmark methodology, metrics, and comparisons
 │   └── SECURITY.md        # Threat model and responsible AI guardrails
-├── tests/                 # 28 comprehensive pytest unit and integration tests
+├── tests/                 # 32 comprehensive pytest unit and integration tests
 ├── ui/                    # Streamlit enterprise application and reusable components
 ├── docker-compose.yml     # Multi-container orchestration (API + UI)
 ├── Dockerfile             # Production multi-stage Docker build
+├── render.yaml            # Render Cloud deployment blueprint
+├── requirements.txt       # Production dependencies
 ├── pyproject.toml         # Packaging, dependencies, and tool configurations
 └── README.md              # Project documentation and interview guide
 ```
