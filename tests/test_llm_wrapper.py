@@ -83,3 +83,41 @@ def test_llm_factory_fallback_to_mock():
 
     mock_provider = get_llm_provider("mock")
     assert isinstance(mock_provider, MockLLM)
+
+
+def test_mock_llm_fmvss_arbitrage_conflict():
+    llm = MockLLM()
+    prompt = build_analysis_prompt(
+        req_id="REQ-GLOBAL-01",
+        req_text="The front turn signal optical surface area shall be 15 cm2 integrated within the headlamp bezel.",
+        retrieved_clauses=[],
+    )
+    result = llm.generate(prompt, response_model=RequirementAnalysisResult)
+    assert isinstance(result, RequirementAnalysisResult)
+    assert len(result.issues) >= 1
+    issue = result.issues[0]
+    assert issue.type == "conflict"
+    assert issue.severity == "critical"
+    assert issue.market_scope == "Cross_Market_Conflict"
+    assert issue.financial_impact_type == "tooling_risk"
+    assert issue.financial_impact_eur == 280000.0
+    assert issue.evidence is not None
+    assert issue.evidence.chunk_id == "FMVSS108-S6.1.1.4"
+
+
+def test_mock_llm_value_engineering_bom_savings():
+    llm = MockLLM()
+    prompt = build_analysis_prompt(
+        req_id="REQ-LED-VE-01",
+        req_text="High-beam LED emitters shall require single-bin chromaticity sorting and 150°C junction headroom.",
+        retrieved_clauses=[],
+    )
+    result = llm.generate(prompt, response_model=RequirementAnalysisResult)
+    assert isinstance(result, RequirementAnalysisResult)
+    assert len(result.issues) >= 1
+    issue = result.issues[0]
+    assert issue.type == "value_engineering"
+    assert issue.market_scope == "Global"
+    assert issue.financial_impact_type == "bom_cost_out"
+    assert issue.financial_impact_eur == 2.85
+    assert "2.85" in issue.title or "BOM" in issue.explanation

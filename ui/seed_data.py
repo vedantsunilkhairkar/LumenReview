@@ -18,20 +18,35 @@ def _seed_demo_review(db):
         id=review_id,
         status="completed",
         raw_input="NextGen Adaptive Matrix LED Lighting Specification",
-        total_requirements=5,
-        total_findings=4,
-        approved_findings=3,
+        total_requirements=7,
+        total_findings=6,
+        approved_findings=5,
         report_md=(
             "# LumenReview Homologation Review Report\n"
             "**Review Run ID**: `REV-2026-DEMO-01`  \n"
             "**Evaluator**: LumenReview Agent v0.1.0 (Human Supervised)  \n\n"
             "## 1. Executive Summary\n"
             "The homologation review analyzed the NextGen Matrix LED Headlamp specifications against "
-            "UNECE Regulation No. 48 and No. 112. Three regulatory deficiencies were confirmed and approved.\n\n"
-            "## 2. Approved Regulatory Findings\n"
+            "UNECE Regulation No. 48, UNECE Regulation No. 112, and US FMVSS 108. Five regulatory and "
+            "cost-optimization findings were confirmed and approved, identifying €280,000 in tooling "
+            "scrappage risk mitigation and €2.85/unit in BOM cost-out potential.\n\n"
+            "## 2. Review Metrics, Homologation Gate & Financial Impact\n\n"
+            "| Metric | Value |\n"
+            "|---|---|\n"
+            "| Total Requirements Ingested | 7 |\n"
+            "| Initial Issues Flagged | 6 |\n"
+            "| Approved by Reviewer | 5 |\n"
+            "| Cross-Jurisdiction Arbitrage (UNECE vs. FMVSS 108) | 1 issue flagged |\n"
+            "| Value Engineering Cost-Out Opportunities | 1 proposal |\n"
+            "| Tooling Scrappage Risk Mitigated | **€280,000.00** |\n"
+            "| Direct BOM Cost-Out Potential | **€2.85 / unit** |\n"
+            "| Citation Verification Rate | 100% Programmatically Verified |\n\n"
+            "## 3. Approved Regulatory Findings & Corrective Rewrites\n"
             "- **[CRITICAL] Missing Headlamp Cleaning for Flux > 2,000 lm** (UNECE R48 Clause 6.2.7.3)\n"
             "- **[CRITICAL] Direction-Indicator Flashing Frequency Out of Bounds** (UNECE R48 Clause 6.5.9)\n"
+            "- **[CRITICAL] FMVSS 108 vs UNECE R48 Arbitrage: Turn Signal Area < 22 cm²** (FMVSS 108 S6.1.1.4, ⚠️ Tooling Risk: €280,000)\n"
             "- **[MAJOR] Subjective Cut-off Aiming Criteria** (UNECE R48 Clause 6.2.6.1.2)\n"
+            "- **[MINOR] Value Engineering: Over-Engineered LED Binning Spec** (💰 BOM Savings: €2.85/unit)\n"
         ),
         trace_json=json.dumps(
             [
@@ -152,6 +167,18 @@ def _seed_demo_review(db):
             text="The stop lamp apparent surface shall be located at a mounting height of 280 mm above the ground.",
             category="Signal",
         ),
+        RequirementRecord(
+            review_id=review_id,
+            req_id="REQ-006",
+            text="The front turn signal optical surface area shall be 15 cm2 integrated within the headlamp bezel for global platform vehicles.",
+            category="Signal",
+        ),
+        RequirementRecord(
+            review_id=review_id,
+            req_id="REQ-007",
+            text="Principal high-beam LED emitters shall require single-bin chromaticity sorting and liquid cooling at 150°C junction temperature.",
+            category="Headlamp",
+        ),
     ]
     db.add_all(reqs)
 
@@ -163,6 +190,9 @@ def _seed_demo_review(db):
             req_id="REQ-001",
             type="non_compliant",
             severity="critical",
+            market_scope="UNECE",
+            financial_impact_eur=450000.0,
+            financial_impact_type="warranty_risk",
             title="Missing Mandatory Headlamp Cleaning for Flux > 2,000 lm",
             explanation="Dipped-beam luminous flux of 2,500 lm strictly requires an automated headlamp cleaning device per UNECE R48 Clause 6.2.7.3.",
             chunk_id="R48-6.2.7",
@@ -183,6 +213,7 @@ def _seed_demo_review(db):
             req_id="REQ-002",
             type="non_compliant",
             severity="critical",
+            market_scope="UNECE",
             title="Direction-Indicator Flash Rate Exceeds Statutory Limit",
             explanation="Specified flash rate of 2.5 Hz exceeds the maximum statutory upper bound of 2.0 Hz (1.5 +/- 0.5 Hz) mandated by UNECE R48 Clause 6.5.9.",
             chunk_id="R48-6.5.9",
@@ -203,6 +234,7 @@ def _seed_demo_review(db):
             req_id="REQ-003",
             type="ambiguous",
             severity="major",
+            market_scope="Global",
             title="Subjective Term 'Sufficient Inclination' in Headlamp Cut-off Aiming",
             explanation="'Sufficient inclination' lacks objective numerical tolerances. UNECE R48 Clause 6.2.6 requires initial downward inclination between -0.5% and -2.5% depending on mounting height.",
             chunk_id="R48-6.2.6",
@@ -223,6 +255,7 @@ def _seed_demo_review(db):
             req_id="REQ-005",
             type="non_compliant",
             severity="major",
+            market_scope="UNECE",
             title="Stop Lamp Mounting Height Below Minimum Statutory Limit",
             explanation="Specified mounting height of 280 mm is below the 350 mm statutory minimum specified in UNECE R48 Clause 6.7.4.2.",
             chunk_id="R48-6.7.4",
@@ -236,6 +269,48 @@ def _seed_demo_review(db):
             citation_note="VERIFIED: Verbatim quote confirmed in UNECE Regulation No. 48 (Clause 6.7.4.2).",
             human_decision="rejected",
             human_notes="Overruled: Vehicle package uses Category N3G off-road waiver for temporary auxiliary test rig.",
+        ),
+        FindingRecord(
+            id="F-REQ006-1",
+            review_id=review_id,
+            req_id="REQ-006",
+            type="conflict",
+            severity="critical",
+            market_scope="Cross_Market_Conflict",
+            financial_impact_eur=280000.0,
+            financial_impact_type="tooling_risk",
+            title="FMVSS 108 vs UNECE R48 Arbitrage: Turn Signal Lens Area Below 22 cm²",
+            explanation="Front turn signal optical lens area of 15 cm2 is permissible under UNECE R48 but directly violates US FMVSS 108 S6.1.1.4 (statutory minimum 22 cm2 / 3.5 sq. in. for vehicles < 2032 mm). This prevents common global platform tooling, risking €280,000 in injection mold redesign expenses.",
+            chunk_id="FMVSS108-S6.1.1.4",
+            quote="must have an effective projected luminous lens area of not less than 22 cm2 (3.5 sq. in.)",
+            document="Federal Motor Vehicle Safety Standard No. 108 - Lamps, Reflective Devices, and Associated Equipment (FMVSS 108)",
+            clause_id="S6.1.1.4",
+            suggested_rewrite="The front turn signal lamp shall have an effective projected luminous lens area of not less than 22 cm2 (3.5 sq. in.) to ensure unified UNECE R48 and US FMVSS 108 homologation compliance.",
+            diff_explanation="Harmonized turn signal optical area to satisfy US FMVSS 108 without breaking UNECE compliance, avoiding tool modification.",
+            confidence=0.98,
+            citation_verified=True,
+            citation_note="VERIFIED: Verbatim quote confirmed in FMVSS 108 (Clause S6.1.1.4).",
+            human_decision="approved",
+            human_notes="Approved: Headlamp bezel CAD updated to 23 cm2 lens aperture for common platform tooling.",
+        ),
+        FindingRecord(
+            id="F-REQ007-1",
+            review_id=review_id,
+            req_id="REQ-007",
+            type="value_engineering",
+            severity="minor",
+            market_scope="Global",
+            financial_impact_eur=2.85,
+            financial_impact_type="bom_cost_out",
+            title="Value Engineering: Over-Engineered LED Binning Spec (€2.85/unit BOM Savings)",
+            explanation="Requirement specifies premium single-bin LED chromaticity tolerances and active liquid thermal headroom. Automotive Grade 1 (AEC-Q102) with 3-step MacAdam ellipse binning satisfies all UNECE/FMVSS colorimetry regulations at an estimated Bill-of-Materials (BOM) cost reduction of €2.85 per headlamp unit.",
+            suggested_rewrite="LED emitters shall conform to standard 3-step MacAdam ellipse chromaticity grouping with AEC-Q102 passive conduction thermal management.",
+            diff_explanation="Relaxed over-engineered LED procurement constraints to standard automotive AEC-Q102, yielding €2.85/unit direct BOM savings.",
+            confidence=0.94,
+            citation_verified=True,
+            citation_note="N/A: General engineering analysis (no clause cited).",
+            human_decision="approved",
+            human_notes="Approved: Purchasing confirmed €2.85/unit savings across 250,000 annual production volume (€712,500 total).",
         ),
     ]
     db.add_all(findings)
@@ -265,6 +340,18 @@ def _seed_demo_review(db):
             finding_id="F-REQ005-1",
             decision="rejected",
             notes="Off-road vehicle exemption applicable.",
+        ),
+        DecisionRecord(
+            review_id=review_id,
+            finding_id="F-REQ006-1",
+            decision="approved",
+            notes="Harmonized lens area to 23 cm2 for FMVSS 108.",
+        ),
+        DecisionRecord(
+            review_id=review_id,
+            finding_id="F-REQ007-1",
+            decision="approved",
+            notes="Accepted BOM cost-out proposal (€2.85/unit savings).",
         ),
     ]
     db.add_all(decisions)

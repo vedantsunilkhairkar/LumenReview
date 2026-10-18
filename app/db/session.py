@@ -40,8 +40,35 @@ def get_db():
 
 
 def init_db():
-    """Create all tables in SQLite."""
+    """Create all tables in SQLite and ensure new columns exist."""
+    from sqlalchemy import text
+
     from app.db import models  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+
+    # Auto-migrate any missing columns for SQLite
+    try:
+        with engine.connect() as conn:
+            res = conn.execute(text("PRAGMA table_info(findings)"))
+            existing_cols = {row[1] for row in res.fetchall()}
+            if existing_cols:
+                if "market_scope" not in existing_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE findings ADD COLUMN market_scope VARCHAR(64) DEFAULT 'Global'"
+                        )
+                    )
+                if "financial_impact_eur" not in existing_cols:
+                    conn.execute(text("ALTER TABLE findings ADD COLUMN financial_impact_eur FLOAT"))
+                if "financial_impact_type" not in existing_cols:
+                    conn.execute(
+                        text(
+                            "ALTER TABLE findings ADD COLUMN financial_impact_type VARCHAR(32) DEFAULT 'none'"
+                        )
+                    )
+                conn.commit()
+    except Exception as e:
+        logger.warning("Auto-migration note: %s", e)
+
     logger.info("Database initialized successfully at %s", sync_db_url)

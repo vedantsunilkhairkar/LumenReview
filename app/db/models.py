@@ -60,10 +60,17 @@ class FindingRecord(Base):
     req_id = Column(String(64), nullable=False, index=True)
     type = Column(
         String(32), nullable=False
-    )  # ambiguous | missing_info | conflict | non_testable | non_compliant
+    )  # ambiguous | missing_info | conflict | non_testable | non_compliant | value_engineering
     severity = Column(String(16), nullable=False)  # critical | major | minor | info
     title = Column(String(256), nullable=False)
     explanation = Column(Text, nullable=False)
+    market_scope = Column(
+        String(64), default="Global"
+    )  # Global | UNECE | FMVSS_108 | Cross_Market_Conflict
+    financial_impact_eur = Column(Float, nullable=True)  # EUR value
+    financial_impact_type = Column(
+        String(32), default="none"
+    )  # tooling_risk | bom_cost_out | warranty_risk | none
     chunk_id = Column(String(64), nullable=True)
     quote = Column(Text, nullable=True)
     document = Column(String(128), nullable=True)

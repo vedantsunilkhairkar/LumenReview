@@ -10,11 +10,15 @@ IssueType = Literal[
     "conflict",
     "non_testable",
     "non_compliant",
+    "value_engineering",
 ]
 
 Severity = Literal["critical", "major", "minor", "info"]
 
 ReviewStatus = Literal["pending", "approved", "rejected", "edited"]
+
+MarketScope = Literal["Global", "UNECE", "FMVSS_108", "Cross_Market_Conflict"]
+FinancialImpactType = Literal["tooling_risk", "bom_cost_out", "warranty_risk", "none"]
 
 
 class Evidence(BaseModel):
@@ -40,6 +44,17 @@ class FindingItem(BaseModel):
     title: str = Field(..., description="Concise summary title of the finding")
     explanation: str = Field(
         ..., description="Detailed engineering rationale of the deficiency or non-compliance"
+    )
+    market_scope: MarketScope | None = Field(
+        default="Global", description="Target market regulatory scope or conflict classification"
+    )
+    financial_impact_eur: float | None = Field(
+        default=None,
+        description="Estimated financial impact in Euros (tooling risk or BOM savings)",
+    )
+    financial_impact_type: FinancialImpactType | None = Field(
+        default="none",
+        description="Category of financial impact: tooling_risk | bom_cost_out | warranty_risk | none",
     )
     evidence: Evidence | None = Field(
         default=None, description="Direct cited evidence from retrieved regulation clauses"

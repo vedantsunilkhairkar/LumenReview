@@ -1,0 +1,13 @@
+[DOCUMENT: Federal Motor Vehicle Safety Standard No. 108 - Lamps, Reflective Devices, and Associated Equipment (FMVSS 108)]
+
+[CLAUSE: S6.1.1.4 - Front Turn Signal Effective Luminous Lens Area]
+Clause S6.1.1.4: Front turn signal lamps on passenger cars and multipurpose passenger vehicles, trucks, and buses of less than 2032 mm in overall width must have an effective projected luminous lens area of not less than 22 cm2 (3.5 sq. in.). When a front turn signal lamp is mounted within 100 mm of a headlamp lower beam, its minimum luminous intensity must be multiplied by a factor of 2.5. Note: Under UNECE R48, there is no fixed minimum 22 cm2 optical lens area mandate provided luminous intensity distribution is satisfied, creating a fundamental cross-market tooling discrepancy.
+
+[CLAUSE: S6.1.1.1 - Side Marker Lamps and Reflex Reflectors]
+Clause S6.1.1.1: Each vehicle must be equipped with the lamps and reflective devices specified in Table I. Front side marker lamps and front side reflex reflectors must be amber and positioned on each side of the vehicle near the front. Rear side marker lamps and rear side reflex reflectors must be red and positioned on each side of the vehicle near the rear. Side marker lamps and reflex reflectors are mandatory on all motor vehicles regardless of overall vehicle length. Note: Under UNECE R48, side marker lamps are only mandatory for vehicles exceeding 6.0 metres in length.
+
+[CLAUSE: S14.9.3 - Adaptive Driving Beam Glare Limits]
+Clause S14.9.3: For Adaptive Driving Beam (ADB) systems, the illuminance cast upon any oncoming or preceding vehicle must not exceed the maximum permitted glare thresholds specified in Table XXI. The system must continuously evaluate target vehicle positions and reduce high-beam intensity to prevent exceeding 2,500 candela at oncoming driver eye test points.
+
+[CLAUSE: S7.1.1 - Lower Beam Photometric Maximum]
+Clause S7.1.1: Lower beam headlamps must comply with the photometric requirements of Table XIX. The maximum luminous intensity at any point within the beam pattern must not exceed 20,000 cd, and the photometric aim must conform to visual/optical or mechanical aim specifications.

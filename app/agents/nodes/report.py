@@ -41,6 +41,22 @@ def generate_report_node(state: AgentState) -> dict[str, Any]:
 
     c_tokens = estimate_tokens(summary_text)
 
+    # Calculate FORVIA HELLA Enterprise Financial Impact Metrics
+    tooling_risk_total = sum(
+        float(f.get("financial_impact_eur") or 0.0)
+        for f in approved_findings
+        if f.get("financial_impact_type") == "tooling_risk"
+    )
+    bom_savings_total = sum(
+        float(f.get("financial_impact_eur") or 0.0)
+        for f in approved_findings
+        if f.get("financial_impact_type") == "bom_cost_out"
+    )
+    cross_market_count = sum(
+        1 for f in approved_findings if f.get("market_scope") == "Cross_Market_Conflict"
+    )
+    ve_count = sum(1 for f in approved_findings if f.get("type") == "value_engineering")
+
     # Build Comprehensive Markdown Document
     md_lines = [
         "# LumenReview Homologation Review Report",
@@ -56,7 +72,7 @@ def generate_report_node(state: AgentState) -> dict[str, Any]:
         "",
         "---",
         "",
-        "## 2. Review Metrics & Homologation Gate",
+        "## 2. Review Metrics, Homologation Gate & Financial Impact",
         "",
         "| Metric | Value |",
         "|---|---|",
@@ -64,6 +80,10 @@ def generate_report_node(state: AgentState) -> dict[str, Any]:
         f"| Initial Issues Flagged | {len(findings)} |",
         f"| Approved by Reviewer | {len(approved_findings)} |",
         f"| Rejected / Overruled | {len(findings) - len(approved_findings)} |",
+        f"| Cross-Jurisdiction Arbitrage (UNECE vs. FMVSS 108) | {cross_market_count} issues flagged |",
+        f"| Value Engineering Cost-Out Opportunities | {ve_count} proposals |",
+        f"| Tooling Scrappage Risk Mitigated | **€{tooling_risk_total:,.2f}** |",
+        f"| Direct BOM Cost-Out Potential | **€{bom_savings_total:,.2f} / unit** |",
         "| Citation Verification Rate | 100% Programmatically Verified |",
         "",
         "---",
@@ -82,15 +102,30 @@ def generate_report_node(state: AgentState) -> dict[str, Any]:
             title = f.get("title", "Finding")
             req_id = f.get("req_id", "REQ")
             finding_type = f.get("type", "issue").replace("_", " ").title()
+            market = f.get("market_scope", "Global")
+            fin_val = f.get("financial_impact_eur")
+            fin_type = f.get("financial_impact_type", "none")
 
-            md_lines.extend(
-                [
-                    f"### {idx}. [{severity}] {title} (`{req_id}`)",
-                    f"- **Taxonomy**: {finding_type}",
-                    f"- **Reviewer Action**: {f.get('human_decision', 'approved').title()}",
-                    f"- **Engineering Rationale**: {f.get('explanation')}",
-                ]
-            )
+            fin_badge = ""
+            if fin_val and fin_type != "none":
+                if fin_type == "tooling_risk":
+                    fin_badge = f"- **Financial Risk (Tooling)**: ⚠️ €{fin_val:,.2f} (Injection mold re-cut / scrappage avoidance)"
+                elif fin_type == "bom_cost_out":
+                    fin_badge = (
+                        f"- **Financial Impact (Cost-Out)**: 💰 €{fin_val:,.2f} / unit BOM savings"
+                    )
+
+            finding_lines = [
+                f"### {idx}. [{severity}] {title} (`{req_id}`)",
+                f"- **Taxonomy**: {finding_type}",
+                f"- **Regulatory Scope**: {market}",
+                f"- **Reviewer Action**: {f.get('human_decision', 'approved').title()}",
+            ]
+            if fin_badge:
+                finding_lines.append(fin_badge)
+            finding_lines.append(f"- **Engineering Rationale**: {f.get('explanation')}")
+
+            md_lines.extend(finding_lines)
 
             if f.get("human_notes"):
                 md_lines.append(f"- **Reviewer Notes**: _{f.get('human_notes')}_")

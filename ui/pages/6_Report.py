@@ -59,6 +59,39 @@ if not report_md:
     st.page_link("pages/3_Review_Workspace.py", label="Go to Review Workspace", icon="🔬")
     st.stop()
 
+# Executive Impact Metrics
+tooling_risk = sum(
+    float(f.get("financial_impact_eur") or 0.0)
+    for f in approved_findings
+    if f.get("financial_impact_type") == "tooling_risk"
+)
+bom_savings = sum(
+    float(f.get("financial_impact_eur") or 0.0)
+    for f in approved_findings
+    if f.get("financial_impact_type") == "bom_cost_out"
+)
+cross_market_count = sum(
+    1 for f in approved_findings if f.get("market_scope") == "Cross_Market_Conflict"
+)
+ve_count = sum(1 for f in approved_findings if f.get("type") == "value_engineering")
+
+with st.container(border=True):
+    st.markdown("##### 💼 FORVIA HELLA Enterprise Impact Summary")
+    rep_c1, rep_c2, rep_c3, rep_c4 = st.columns(4)
+    with rep_c1:
+        st.metric(
+            "Tooling Scrappage Mitigated", f"€{tooling_risk:,.0f}" if tooling_risk > 0 else "€0"
+        )
+    with rep_c2:
+        st.metric(
+            "BOM Cost-Out Opportunity",
+            f"€{bom_savings:,.2f} / unit" if bom_savings > 0 else "€0.00 / unit",
+        )
+    with rep_c3:
+        st.metric("Multi-Jurisdiction Arbitrage", f"{cross_market_count} issues")
+    with rep_c4:
+        st.metric("Value Engineering Rewrites", f"{ve_count} proposals")
+
 # Action Row: Export buttons
 col_exp1, col_exp2, col_exp3 = st.columns([2, 1, 1])
 

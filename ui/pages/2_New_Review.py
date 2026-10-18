@@ -33,6 +33,8 @@ REQ-002: The direction-indicator lamps shall operate at a flashing frequency of 
 REQ-003: Front daytime running lamps must remain illuminated at full intensity when dipped-beam headlamps are turned on.
 REQ-004: Dipped-beam cut-off line must provide sufficient illumination under normal load conditions.
 REQ-005: Stop lamp apparent surface mounting height shall be set to 280 mm above ground level.
+REQ-006: The front turn signal optical surface area shall be 15 cm2 integrated within the headlamp bezel for global platform vehicles.
+REQ-007: Principal high-beam LED emitters shall require single-bin chromaticity sorting and liquid cooling at 150°C junction temperature.
 """
 
 col_main, col_config = st.columns([2.5, 1])
@@ -49,7 +51,7 @@ with col_config:
         st.markdown(
             """
             <div style="font-size: 0.75rem; color: #64748B; margin-top: 0.5rem;">
-                Target Regulations: <b>UNECE R48 (Installation)</b> and <b>UNECE R112 (Headlamps)</b>.
+                Target Standards: <b>UNECE R48</b>, <b>UNECE R112</b>, and <b>US FMVSS 108</b> (Multi-Jurisdiction Arbitrage & Value Engineering).
             </div>
             """,
             unsafe_allow_html=True,

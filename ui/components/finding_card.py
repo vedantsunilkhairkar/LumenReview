@@ -9,7 +9,9 @@ from ui.components.diff_viewer import render_diff_viewer
 from ui.components.evidence_panel import render_evidence_panel
 from ui.components.severity_badge import (
     render_decision_badge,
+    render_financial_badge,
     render_issue_type_badge,
+    render_market_badge,
     render_severity_badge,
 )
 
@@ -26,6 +28,9 @@ def render_finding_card(
     issue_type = finding.get("type", "ambiguous")
     title = finding.get("title", "")
     explanation = finding.get("explanation", "")
+    market_scope = finding.get("market_scope", "Global")
+    fin_val = finding.get("financial_impact_eur")
+    fin_type = finding.get("financial_impact_type", "none")
     confidence = finding.get("confidence", 0.9)
     is_verified = finding.get("citation_verified", False)
     verification_note = finding.get("citation_verification_note")
@@ -36,6 +41,8 @@ def render_finding_card(
 
     sev_badge = render_severity_badge(severity)
     type_badge = render_issue_type_badge(issue_type)
+    market_badge = render_market_badge(market_scope)
+    fin_badge = render_financial_badge(fin_val, fin_type)
     dec_badge = render_decision_badge(human_decision)
     confidence_pct = int(confidence * 100)
 
@@ -46,6 +53,8 @@ def render_finding_card(
                 <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                     {sev_badge}
                     {type_badge}
+                    {market_badge}
+                    {fin_badge}
                     <code style="background: #F1F5F9; color: #475569; font-weight: 600; padding: 0.15rem 0.4rem; border-radius: 4px;">{req_id}</code>
                     <span style="font-size: 0.75rem; color: #64748B;">ID: {fid}</span>
                 </div>

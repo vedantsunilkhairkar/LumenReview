@@ -282,6 +282,103 @@ class MockLLM(BaseLLMProvider):
                 )
             )
 
+        # Scenario 8: Cross-jurisdiction conflict / FMVSS 108 Turn Signal Area < 22 cm2
+        if (
+            "turn signal" in text_lower
+            or "direction indicator" in text_lower
+            or "indicator" in text_lower
+        ) and any(
+            a in text_lower
+            for a in [
+                "12 cm",
+                "14 cm",
+                "15 cm",
+                "18 cm",
+                "15cm",
+                "18cm",
+                "lens area",
+                "surface area",
+            ]
+        ):
+            issues.append(
+                FindingItem(
+                    id=f"F-{req_id}-1" if not issues else f"F-{req_id}-2",
+                    req_id=req_id,
+                    type="conflict",
+                    severity="critical",
+                    market_scope="Cross_Market_Conflict",
+                    financial_impact_eur=280000.0,
+                    financial_impact_type="tooling_risk",
+                    title="FMVSS 108 vs UNECE R48 Arbitrage: Turn Signal Lens Area Below 22 cm²",
+                    explanation=(
+                        "Requirement specifies front turn signal optical surface area below the 22 cm² (3.5 sq. in.) "
+                        "statutory minimum required by FMVSS 108 S6.1.1.4 for vehicles under 2032 mm width. "
+                        "While permissible under UNECE R48, this discrepancy renders the headlamp uncertifiable in North America, "
+                        "risking €280,000 in injection mold tooling re-cuts."
+                    ),
+                    evidence=Evidence(
+                        chunk_id="FMVSS108-S6.1.1.4",
+                        quote="must have an effective projected luminous lens area of not less than 22 cm2 (3.5 sq. in.)",
+                        document="Federal Motor Vehicle Safety Standard No. 108 - Lamps, Reflective Devices, and Associated Equipment (FMVSS 108)",
+                        clause_id="S6.1.1.4",
+                        page=1,
+                    ),
+                    suggested_rewrite=SuggestedRewrite(
+                        text=(
+                            f"{req_text.rstrip('.')} with an effective projected luminous lens area of not less than 22 cm2 "
+                            "conforming to FMVSS 108 S6.1.1.4 and UNECE R48."
+                        ),
+                        diff_explanation="Enforced FMVSS 108 22 cm2 minimum luminous lens area to prevent duplicate tooling and North American homologation rejection.",
+                    ),
+                    confidence=0.98,
+                )
+            )
+
+        # Scenario 9: Value Engineering / BOM Cost-Out Opportunity
+        if any(
+            ve in text_lower
+            for ve in [
+                "single-bin",
+                "single bin",
+                "tight binning",
+                "150°c",
+                "150 c",
+                "150 deg",
+                "liquid cooling",
+                "active cooling",
+                "over-engineered",
+                "0.5 step",
+            ]
+        ):
+            issues.append(
+                FindingItem(
+                    id=f"F-{req_id}-1" if not issues else f"F-{req_id}-3",
+                    req_id=req_id,
+                    type="value_engineering",
+                    severity="minor",
+                    market_scope="Global",
+                    financial_impact_eur=2.85,
+                    financial_impact_type="bom_cost_out",
+                    title="Value Engineering: Over-Engineered LED Binning / Thermal Spec (€2.85/unit BOM Savings)",
+                    explanation=(
+                        "Requirement specifies premium single-bin LED chromaticity tolerances and extreme 150°C junction headroom. "
+                        "Standard automotive Grade 1 (AEC-Q102) with 3-step MacAdam ellipse binning satisfies all UNECE R112/R149 "
+                        "colorimetry regulations at an estimated Bill-of-Materials (BOM) cost reduction of €2.85 per headlamp unit."
+                    ),
+                    evidence=None,
+                    suggested_rewrite=SuggestedRewrite(
+                        text=re.sub(
+                            r"(single-bin|single bin|tight binning|liquid cooling|150\s*(?:°C|deg|c))",
+                            "standard 3-step MacAdam ellipse chromaticity grouping with AEC-Q102 passive conduction thermal management",
+                            req_text,
+                            flags=re.IGNORECASE,
+                        ),
+                        diff_explanation="Relaxed over-engineered LED procurement constraints to standard automotive AEC-Q102, yielding €2.85/unit BOM cost savings.",
+                    ),
+                    confidence=0.94,
+                )
+            )
+
         # Scenario 5: Intentional Bad Citation test case
         if "hallucinated_citation" in text_lower:
             issues.append(

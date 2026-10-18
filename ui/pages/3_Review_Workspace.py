@@ -115,6 +115,46 @@ with st.container(border=True):
                 except Exception:
                     st.page_link("pages/6_Report.py", label="➡️ View Final Report", icon="📑")
 
+# Executive Financial Impact & Arbitrage Metrics (FORVIA HELLA Tier-1 Moat)
+tooling_risk = sum(
+    float(f.get("financial_impact_eur") or 0.0)
+    for f in findings
+    if f.get("financial_impact_type") == "tooling_risk"
+)
+bom_savings = sum(
+    float(f.get("financial_impact_eur") or 0.0)
+    for f in findings
+    if f.get("financial_impact_type") == "bom_cost_out"
+)
+cross_market_count = sum(1 for f in findings if f.get("market_scope") == "Cross_Market_Conflict")
+ve_count = sum(1 for f in findings if f.get("type") == "value_engineering")
+
+f_col1, f_col2, f_col3, f_col4 = st.columns(4)
+with f_col1:
+    st.metric(
+        label="⚠️ Tooling Scrappage Risk",
+        value=f"€{tooling_risk:,.0f}" if tooling_risk > 0 else "€0",
+        help="Avoided injection mold tooling redesign and re-cut expenses",
+    )
+with f_col2:
+    st.metric(
+        label="💰 BOM Cost-Out Potential",
+        value=f"€{bom_savings:,.2f} / unit" if bom_savings > 0 else "€0.00 / unit",
+        help="Estimated direct per-unit Bill of Materials savings across production volume",
+    )
+with f_col3:
+    st.metric(
+        label="⚖️ Multi-Jurisdiction Conflicts",
+        value=f"{cross_market_count} issues",
+        help="Contradictions between UNECE R48/R112 and US FMVSS 108 standards",
+    )
+with f_col4:
+    st.metric(
+        label="💎 Value Engineering",
+        value=f"{ve_count} proposals",
+        help="Over-engineered specifications relaxed to standard automotive AEC-Q102 grade",
+    )
+
 # Main Split-View Layout
 st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
 left_col, right_col = st.columns([1.1, 2])

@@ -19,7 +19,9 @@ class ClauseAwareChunker:
     """Chunks structured regulatory texts while preserving clause numbers and hierarchy."""
 
     DOCUMENT_HEADER_PATTERN = re.compile(r"^\[DOCUMENT:\s*(.+?)\]", re.MULTILINE)
-    CLAUSE_HEADER_PATTERN = re.compile(r"^\[CLAUSE:\s*([\d\.]+)\s*-\s*(.+?)\]", re.MULTILINE)
+    CLAUSE_HEADER_PATTERN = re.compile(
+        r"^\[CLAUSE:\s*([A-Za-z0-9\.\-]+)\s*-\s*(.+?)\]", re.MULTILINE
+    )
 
     def chunk_text(
         self, text: str, default_doc_name: str = "UNECE Regulation"
@@ -58,8 +60,15 @@ class ClauseAwareChunker:
             end_pos = clause_splits[i + 1].start() if i + 1 < len(clause_splits) else len(text)
             clause_body = text[start_pos:end_pos].strip()
 
-            # Create clean short chunk ID (e.g. R48-6.2.6)
-            doc_prefix = "R48" if "48" in doc_name else ("R112" if "112" in doc_name else "REG")
+            # Create clean short chunk ID (e.g. R48-6.2.6 or FMVSS108-S6.1.1)
+            if "48" in doc_name:
+                doc_prefix = "R48"
+            elif "112" in doc_name:
+                doc_prefix = "R112"
+            elif "108" in doc_name or "FMVSS" in doc_name:
+                doc_prefix = "FMVSS108"
+            else:
+                doc_prefix = "REG"
             chunk_id = f"{doc_prefix}-{clause_id}"
 
             chunk = RegulationChunk(

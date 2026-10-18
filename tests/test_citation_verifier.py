@@ -105,3 +105,53 @@ def test_fuzzy_quote_matching(test_store):
 
     verified = verify_single_finding(finding, test_store)
     assert verified["citation_verified"] is True
+
+
+def test_value_engineering_without_citation(test_store):
+    finding = {
+        "id": "F-VE-01",
+        "req_id": "REQ-VE-01",
+        "type": "value_engineering",
+        "severity": "minor",
+        "title": "Value Engineering: Relax Over-Specified LED Binning",
+        "explanation": "Relaxing from single-bin to AEC-Q102 3-step MacAdam ellipse saves €2.85/unit BOM cost.",
+        "financial_impact_eur": 2.85,
+        "financial_impact_type": "bom_cost_out",
+        "evidence": None,
+        "confidence": 0.94,
+    }
+    verified = verify_single_finding(finding, test_store)
+    assert verified["citation_verified"] is True
+    assert "General engineering analysis" in verified["citation_verification_note"]
+
+
+def test_fmvss_citation_verification(test_store):
+    test_store.add_chunks(
+        [
+            RegulationChunk(
+                chunk_id="FMVSS108-S6.1.1.4",
+                document="FMVSS 108",
+                clause_id="S6.1.1.4",
+                section_title="Turn Signal Area",
+                text="Front turn signal lamps must have an effective projected luminous lens area of not less than 22 cm2 (3.5 sq. in.).",
+            )
+        ]
+    )
+    finding = {
+        "id": "F-FMVSS-01",
+        "req_id": "REQ-TS-01",
+        "type": "conflict",
+        "severity": "critical",
+        "financial_impact_eur": 280000.0,
+        "financial_impact_type": "tooling_risk",
+        "confidence": 0.98,
+        "evidence": {
+            "chunk_id": "FMVSS108-S6.1.1.4",
+            "quote": "effective projected luminous lens area of not less than 22 cm2",
+            "document": "FMVSS 108",
+            "clause_id": "S6.1.1.4",
+        },
+    }
+    verified = verify_single_finding(finding, test_store)
+    assert verified["citation_verified"] is True
+    assert "VERIFIED: Verbatim quote confirmed" in verified["citation_verification_note"]
